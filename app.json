@@ -1,46 +1,38 @@
 {
-  "expo": {
-    "name": "Beatspresso",
-    "slug": "Beatspresso",
-    "version": "1.0.2",
-    "orientation": "portrait",
-    "icon": "./assets/images/Beatspresso.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": false,
-    "ios": {
-      "supportsTablet": true,
-      "infoPlist": {
-        "LSApplicationQueriesSchemes": [
-          "spotify",
-          "music"
-        ]
-      }
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "single",
-      "favicon": "./assets/images/favicon.ico"
-    },
-    "plugins": [
-      "expo-router",
-      "expo-font",
-      "expo-web-browser"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "a27019c9-7ad3-4bec-ad3b-f3ef5ca4ea65"
-      }
-    },
-    "android": {
-      "package": "com.bugraarslan.Beatspresso",
-      "permissions": [],
-      "softwareKeyboardLayoutMode": "pan",
-      "enableDangerousExperimentalLeanBuilds": false
+    "expo": {
+        "name": "Beatspresso",
+        "slug": "Beatspresso",
+        "version": "1.0.3",
+        "orientation": "portrait",
+        "icon": "./assets/images/Beatspresso.png",
+        "scheme": "myapp",
+        "userInterfaceStyle": "automatic",
+        "newArchEnabled": false,
+        "ios": {
+            "supportsTablet": true,
+            "infoPlist": {
+                "LSApplicationQueriesSchemes": ["spotify", "music"]
+            }
+        },
+        "web": {
+            "bundler": "metro",
+            "output": "single",
+            "favicon": "./assets/images/favicon.ico"
+        },
+        "plugins": ["expo-router", "expo-font", "expo-web-browser"],
+        "experiments": {
+            "typedRoutes": true
+        },
+        "extra": {
+            "router": {},
+            "eas": {
+                "projectId": "a27019c9-7ad3-4bec-ad3b-f3ef5ca4ea65"
+            }
+        },
+        "android": {
+            "package": "com.bugraarslan.Beatspresso",
+            "permissions": [],
+            "softwareKeyboardLayoutMode": "pan"
+        }
     }
-  }
 }
