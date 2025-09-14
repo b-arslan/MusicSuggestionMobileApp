@@ -52,10 +52,10 @@ export default function NotFoundScreen() {
                         </Text>
                         <Link href="/" asChild>
                             <View
-                                style={[
-                                    styles.recommendButton,
-                                    localStyles.button,
-                                ]}
+                                style={{
+                                    ...styles.recommendButton,
+                                    ...localStyles.button,
+                                }}
                             >
                                 <Text style={styles.buttonText}>
                                     {t.goHome ?? 'Go to home screen!'}

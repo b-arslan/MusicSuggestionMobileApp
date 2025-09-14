@@ -76,12 +76,12 @@ export default function MainScroll({
                 {(['track', 'artist', 'mood'] as const).map((type, index) => (
                     <TouchableOpacity
                         key={type}
-                        style={[
-                            styles.radioButton,
-                            selectedType === type && styles.radioButtonActive,
-                            index === 0 && styles.radioButtonFirst,
-                            index === 2 && styles.radioButtonLast,
-                        ]}
+                        style={{
+                            ...styles.radioButton,
+                            ...(selectedType === type && styles.radioButtonActive),
+                            ...(index === 0 && styles.radioButtonFirst),
+                            ...(index === 2 && styles.radioButtonLast),
+                        }}
                         onPress={() => onChangeType(type)}
                     >
                         {type === 'track' && (
@@ -103,10 +103,10 @@ export default function MainScroll({
                             />
                         )}
                         <Text
-                            style={[
-                                styles.radioText,
-                                selectedType === type && styles.radioTextActive,
-                            ]}
+                            style={{
+                                ...styles.radioText,
+                                ...(selectedType === type && styles.radioTextActive),
+                            }}
                         >
                             {t[type]}
                         </Text>
@@ -120,10 +120,10 @@ export default function MainScroll({
                     onPress={onToggleLessPopular}
                 >
                     <View
-                        style={[
-                            styles.checkboxBox,
-                            lessPopular && styles.checkboxBoxChecked,
-                        ]}
+                        style={{
+                            ...styles.checkboxBox,
+                            ...(lessPopular && styles.checkboxBoxChecked),
+                        }}
                     >
                         {lessPopular && <Text style={styles.checkmark}>✓</Text>}
                     </View>
@@ -137,10 +137,10 @@ export default function MainScroll({
                     onPress={onOpenMoodModal}
                 >
                     <Text
-                        style={[
-                            styles.moodDropdownText,
-                            selectedItems.length === 0 && styles.placeholder,
-                        ]}
+                        style={{
+                            ...styles.moodDropdownText,
+                            ...(selectedItems.length === 0 && styles.placeholder),
+                        }}
                     >
                         {selectedItems.length > 0
                             ? selectedItems[0]
@@ -182,14 +182,14 @@ export default function MainScroll({
                                 }
                             >
                                 <Text
-                                    style={[
-                                        styles.autocompleteText,
-                                        (!canAddMore() ||
+                                    style={{
+                                        ...styles.autocompleteText,
+                                        ...((!canAddMore() ||
                                             name ===
                                                 (t.noResults ??
                                                     'No results')) &&
-                                            styles.disabledText,
-                                    ]}
+                                            styles.disabledText),
+                                    }}
                                     numberOfLines={1}
                                 >
                                     {name}

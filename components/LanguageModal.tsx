@@ -61,11 +61,11 @@ export default function LanguageModal({
                     {languageOptions.map((option) => (
                         <TouchableOpacity
                             key={option.code}
-                            style={[
-                                styles.languageOption,
-                                language === option.code &&
-                                    styles.languageOptionSelected,
-                            ]}
+                            style={{
+                                ...styles.languageOption,
+                                ...(language === option.code &&
+                                    styles.languageOptionSelected),
+                            }}
                             onPress={() => handleLanguageSelect(option.code)}
                         >
                             <Text style={styles.languageOptionText}>

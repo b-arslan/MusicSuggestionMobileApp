@@ -78,10 +78,10 @@ export default function WelcomeModal({
                             onPress={() => setDontShowWelcome((p) => !p)}
                         >
                             <View
-                                style={[
-                                    styles.welcomeCheckboxBox,
-                                    dontShowWelcome && styles.welcomeCheckboxBoxChecked,
-                                ]}
+                                style={{
+                                    ...styles.welcomeCheckboxBox,
+                                    ...(dontShowWelcome && styles.welcomeCheckboxBoxChecked),
+                                }}
                             >
                                 {dontShowWelcome && (
                                     <Text style={styles.welcomeCheckmark}>✓</Text>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Beatspresso – Try the App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Minimal reset -->
+  <style>
+    :root{
+      --brand:#dc2626;
+      --bg:#0b0b0b;
+      --card:#141414;
+      --text:#f5f5f5;
+      --muted:#9ca3af;
+      --border:#262626;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background:linear-gradient(180deg,#000,#121212);
+      font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+    }
+    .wrap{max-width:1200px; margin:0 auto; padding:28px}
+    header{display:flex; align-items:center; justify-content:space-between; margin-bottom:24px}
+    h1{font-size:22px; margin:0; letter-spacing:.3px}
+    .grid{display:grid; grid-template-columns: 1.1fr 1fr; gap:24px}
+    @media (max-width: 980px){ .grid{grid-template-columns: 1fr; } }
+
+    .card{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px}
+    .card h2{margin:0 0 12px; font-size:18px}
+    .muted{color:var(--muted); font-size:14px}
+
+    /* QR area */
+    .qr-box{display:flex; gap:18px; align-items:center}
+    #qrcode{width:160px; height:160px; border-radius:12px; overflow:hidden; background:#fff}
+    .btns{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      appearance:none; border:1px solid var(--border); background:#1a1a1a;
+      color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer;
+    }
+    .btn.primary{background:var(--brand); border-color:var(--brand)}
+    .input{
+      width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border);
+      background:#0f0f0f; color:#fff; font-size:14px
+    }
+    .row{display:flex; gap:10px; align-items:center}
+    .row > *{flex:1}
+
+    /* Phone mock (iPhone 14-ish) */
+    .phone-frame{
+      width:390px; height:844px; border-radius:42px; padding:14px;
+      margin:0 auto; background:linear-gradient(145deg,#1a1a1a,#0f0f0f);
+      border:1px solid #202020; box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 0 0 6px #111;
+      position:relative;
+    }
+    .notch{
+      position:absolute; top:10px; left:50%; transform:translateX(-50%);
+      width:180px; height:30px; background:#000; border-radius:20px; box-shadow:0 0 0 2px #0d0d0d inset;
+    }
+    iframe{
+      width:100%; height:100%; border:0; border-radius:28px; overflow:hidden; background:#fff;
+    }
+    .toolbar{display:flex; gap:10px; align-items:center; margin-bottom:12px; flex-wrap:wrap}
+    .chip{
+      border:1px solid var(--border); padding:6px 10px; border-radius:999px; color:#ddd; font-size:13px
+    }
+    .right{text-align:right}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Try Beatspresso on your phone</h1>
+      <span class="chip">Expo + Web live preview</span>
+    </header>
+
+    <div class="grid">
+      <!-- LEFT: QR for Expo Go -->
+      <!-- <section class="card">
+        <h2>Open in Expo Go (QR)</h2>
+        <p class="muted">Scan this QR with the <b>Expo Go</b> app. If you’re on mobile, tap the button.</p>
+
+        <div class="qr-box" style="margin:16px 0 14px">
+          <div id="qrcode"></div>
+          <div style="flex:1">
+            <div class="row" style="margin-bottom:10px">
+              <input id="expoUrl" class="input" placeholder="exp://... or https://expo.dev/..." />
+              <button id="applyExpoUrl" class="btn">Set</button>
+            </div>
+            <div class="btns">
+              <button id="openExpo" class="btn primary">Open in Expo Go</button>
+              <button id="copyExpo" class="btn">Copy link</button>
+            </div>
+            <p class="muted" style="margin-top:10px">
+              Tip: Run <code>npx expo start</code> → QR/URL’i buraya yapıştır.
+            </p>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- RIGHT: Web mobile preview -->
+      <section class="card">
+        <div class="toolbar">
+          <h2 style="margin-right:auto">Live Web Preview</h2>
+          <span class="chip" id="vwLabel">Viewport: 390×844</span>
+          <button class="btn" id="toggleDevice">Toggle device (iPhone / Pixel)</button>
+        </div>
+
+        <div class="row" style="margin-bottom:10px">
+          <input id="webUrl" class="input" placeholder="http://localhost:19006 or deployed URL" />
+          <button id="applyWebUrl" class="btn">Set</button>
+          <button id="openWeb" class="btn">Open in new tab</button>
+        </div>
+
+        <div class="phone-frame" id="phone">
+          <div class="notch"></div>
+          <iframe id="preview" src="about:blank" allow="clipboard-read; clipboard-write; geolocation; midi; camera; microphone; autoplay"></iframe>
+        </div>
+        <p class="muted" style="margin-top:10px">
+          Dev için <code>npm run web</code> / <code>expo start --web</code> ile gelen URL’yi gir;
+          prod için Vercel/Netlify’daki web build URL’ni koy.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <!-- QRCode.js (CDN) -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-4ErZC2xGkH8bQ3n2v0x0zA0h/0k6eSgKzjQW4s0tQ5t0c8s8B5m2m2m8xkE1K2nB2GQ7H7j0cQm2M0Yc2w2i0g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  <script>
+    // ==== CONFIG ==== (istenirse default koy)
+    let EXPO_GO_URL = "http://localhost:8081";    // ör: exp://192.168.1.10:8081 veya https://expo.dev/@user/app?serviceType=classic&distribution=expo-go
+    let WEB_DEMO_URL = "http://localhost:8081";   // ör: http://localhost:19006 veya deploy linki
+
+    // DOM
+    const expoInput = document.getElementById('expoUrl');
+    const webInput  = document.getElementById('webUrl');
+    const applyExpo = document.getElementById('applyExpoUrl');
+    const applyWeb  = document.getElementById('applyWebUrl');
+    const openExpo  = document.getElementById('openExpo');
+    const copyExpo  = document.getElementById('copyExpo');
+    const openWeb   = document.getElementById('openWeb');
+    const iframe    = document.getElementById('preview');
+    const phone     = document.getElementById('phone');
+    const vwLabel   = document.getElementById('vwLabel');
+    const toggleBtn = document.getElementById('toggleDevice');
+
+    // QR init
+    // const qr = new QRCode(document.getElementById("qrcode"), {
+    //   text: "https://expo.dev", width: 160, height: 160, correctLevel: QRCode.CorrectLevel.H
+    // });
+
+    function setExpoUrl(u){
+      EXPO_GO_URL = u.trim();
+      expoInput.value = EXPO_GO_URL;
+      if(EXPO_GO_URL) qr.makeCode(EXPO_GO_URL);
+    }
+    function setWebUrl(u){
+      WEB_DEMO_URL = u.trim();
+      webInput.value = WEB_DEMO_URL;
+      if (WEB_DEMO_URL) iframe.src = WEB_DEMO_URL;
+    }
+
+    // Apply buttons
+    // applyExpo.addEventListener('click', () => setExpoUrl(expoInput.value));
+    applyWeb.addEventListener('click',  () => setWebUrl(webInput.value));
+
+    // Open/Copy
+    // openExpo.addEventListener('click', () => {
+    //   if(!EXPO_GO_URL) return alert('Expo URL boş.');
+    //   window.open(EXPO_GO_URL, '_blank');
+    // });
+    // copyExpo.addEventListener('click', async () => {
+    //   if(!EXPO_GO_URL) return alert('Expo URL boş.');
+    //   try{ await navigator.clipboard.writeText(EXPO_GO_URL); alert('Kopyalandı!'); } catch{ alert(EXPO_GO_URL); }
+    // });
+    openWeb.addEventListener('click', () => {
+      if(!WEB_DEMO_URL) return alert('Web demo URL boş.');
+      window.open(WEB_DEMO_URL, '_blank');
+    });
+
+    // Device toggle (390×844 ↔ 412×915)
+    let iphone = true;
+    toggleBtn.addEventListener('click', () => {
+      iphone = !iphone;
+      if (iphone){
+        phone.style.width='390px'; phone.style.height='844px';
+        vwLabel.textContent = 'Viewport: 390×844';
+      } else {
+        phone.style.width='412px'; phone.style.height='915px';
+        vwLabel.textContent = 'Viewport: 412×915';
+      }
+    });
+
+    // Opsiyonel: URL paramlarıyla otomatik doldurma (?expo=...&web=...)
+    const params = new URLSearchParams(location.search);
+    if(params.get('expo')) setExpoUrl(params.get('expo'));
+    if(params.get('web'))  setWebUrl(params.get('web'));
+  </script>
+</body>
+</html>
